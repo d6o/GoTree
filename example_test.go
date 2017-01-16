@@ -1,7 +1,7 @@
 package gotree_test
 
 import (
-	"github.com/DiSiqueira/gotree"
+	"github.com/disiqueira/gotree"
 )
 
 func ExamplePrintTree() {
