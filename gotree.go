@@ -1,14 +1,14 @@
 package gotree
 
 import (
-	"io/ioutil"
 	"fmt"
+	"io/ioutil"
 	"path/filepath"
 )
 
 type GTStructure struct {
 	Name  string
-	Items [] GTStructure
+	Items []GTStructure
 }
 
 func PrintTree(object GTStructure) {
@@ -66,7 +66,7 @@ func PrintLine(name string, spaces []bool, last bool) {
 		indicator = "└── "
 	}
 
-	fmt.Println(indicator+name)
+	fmt.Println(indicator + name)
 
 }
 
@@ -74,7 +74,7 @@ func ReadObjItems(items []GTStructure, spaces []bool) {
 
 	for i, f := range items {
 
-		last := (i>=len(items) -1 )
+		last := (i >= len(items)-1)
 
 		PrintLine(f.Name, spaces, last)
 		if len(f.Items) > 0 {
