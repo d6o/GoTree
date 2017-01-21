@@ -6,13 +6,13 @@ import (
 	"path/filepath"
 )
 
-/* GoTree Structure to output print */
+/*GTStructure Structure to output print */
 type GTStructure struct {
 	Name  string
 	Items []GTStructure
 }
 
-/* Print Tree in console */
+/*PrintTree - Print the tree in console */
 func PrintTree(object GTStructure) {
 
 	fmt.Println(object.Name)
@@ -22,7 +22,7 @@ func PrintTree(object GTStructure) {
 	readObjItems(object.Items, spaces)
 }
 
-/* Read a folder and return the generated object */
+/*ReadFolder - Read a folder and return the generated object */
 func ReadFolder(directory string) GTStructure {
 
 	var parent GTStructure
