@@ -17,7 +17,7 @@ func PrintTree(object GTStructure) {
 
 	var spaces []bool
 
-	ReadObjItems(object.Items, spaces)
+	readObjItems(object.Items, spaces)
 }
 
 func ReadFolder(directory string) GTStructure {
@@ -25,12 +25,12 @@ func ReadFolder(directory string) GTStructure {
 	var parent GTStructure
 
 	parent.Name = directory
-	parent.Items = CreateGTReadFolder(directory)
+	parent.Items = createGTReadFolder(directory)
 
 	return parent
 }
 
-func CreateGTReadFolder(directory string) []GTStructure {
+func createGTReadFolder(directory string) []GTStructure {
 
 	var items []GTStructure
 	files, _ := ioutil.ReadDir(directory)
@@ -42,7 +42,7 @@ func CreateGTReadFolder(directory string) []GTStructure {
 
 		if f.IsDir() {
 			newDirectory := filepath.Join(directory, f.Name())
-			child.Items = CreateGTReadFolder(newDirectory)
+			child.Items = createGTReadFolder(newDirectory)
 		}
 
 		items = append(items, child)
@@ -50,7 +50,7 @@ func CreateGTReadFolder(directory string) []GTStructure {
 	return items
 }
 
-func PrintLine(name string, spaces []bool, last bool) {
+func printLine(name string, spaces []bool, last bool) {
 
 	for _, space := range spaces {
 		if space {
@@ -70,18 +70,18 @@ func PrintLine(name string, spaces []bool, last bool) {
 
 }
 
-func ReadObjItems(items []GTStructure, spaces []bool) {
+func readObjItems(items []GTStructure, spaces []bool) {
 
 	for i, f := range items {
 
 		last := (i >= len(items)-1)
 
-		PrintLine(f.Name, spaces, last)
+		printLine(f.Name, spaces, last)
 		if len(f.Items) > 0 {
 
 			spacesChild := append(spaces, last)
 
-			ReadObjItems(f.Items, spacesChild)
+			readObjItems(f.Items, spacesChild)
 		}
 	}
 }
