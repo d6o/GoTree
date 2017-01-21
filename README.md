@@ -34,6 +34,8 @@ $ go get github.com/disiqueira/gotree
 
 ### Simple create, populate and print example
 
+![](http://image.prntscr.com/image/dd2fe3737e6543f7b21941a6953598c2.png)
+
 ```golang
 import "github.com/disiqueira/gotree"
 
@@ -55,10 +57,9 @@ artist.Items = append(artist.Items, album)
 gotree.PrintTree(artist)
 ```
 
-Result: 
-![](http://image.prntscr.com/image/dd2fe3737e6543f7b21941a6953598c2.png)
-
 ### Read folder and print tree
+
+![](http://image.prntscr.com/image/087fa74560b04a1e8a653c6c630d1e45.png)
 
 ```golang
 import "github.com/disiqueira/gotree"
@@ -67,8 +68,6 @@ obj := gotree.ReadFolder("/Users/disiqueira/Documents/placa_display_led")
 gotree.PrintTree(obj)
 ```
 
-Result: 
-![](http://image.prntscr.com/image/087fa74560b04a1e8a653c6c630d1e45.png)
 
 ## Contributing
 
