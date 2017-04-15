@@ -59,7 +59,7 @@ func printLine(name string, spaces []bool, last bool) {
 		if space {
 			fmt.Print("    ")
 		} else {
-			fmt.Print("|   ")
+			fmt.Print("│   ")
 		}
 	}
 
