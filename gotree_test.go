@@ -4,24 +4,6 @@ import (
 	"testing"
 )
 
-// TestFolderTree should test if reading a folder returns rendered structure as expected
-func TestFolderTree(t *testing.T) {
-	tree := ReadFolder("test-resources")
-	actual := StringTree(tree)
-	expected := "test-resources\n" +
-		"├── dir1\n" +
-		"│   ├── dir3\n" +
-		"│   │   └── file2.txt\n" +
-		"│   └── file1.txt\n" +
-		"├── dir2\n" +
-		"│   └── file3.txt\n" +
-		"└── file4.txt\n"
-
-	if actual != expected {
-		t.Fatalf("Actual tree::\n[%s]\nis not the same as expected:\n[%s]", actual, expected)
-	}
-}
-
 // TestUpdatingItemsStructure should test whenever item updates in the tree structure are
 // reflected correctly in the rendered structure
 func TestUpdatingItemsStructure(t *testing.T) {

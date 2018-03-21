@@ -49,12 +49,12 @@ var music gotree.GTStructure
 music.Name = "5 Minutes Alone"
 
 //Add Music to the Album
-album.Items = append(album.Items, music)
+album.Items = append(album.Items, &music)
 
 //Add Album to the Artist
-artist.Items = append(artist.Items, album)
+artist.Items = append(artist.Items, &album)
 
-gotree.PrintTree(artist)
+gotree.PrintTree(&artist)
 ```
 
 ### Read folder and print tree
