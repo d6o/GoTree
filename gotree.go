@@ -1,83 +1,101 @@
-package gotree
+package main
 
-import (
-	"fmt"
-	"io/ioutil"
-	"path/filepath"
+const (
+	newLine      = "\n"
+	emptySpace   = "    "
+	middleItem   = "├── "
+	continueItem = "│   "
+	lastItem     = "└── "
 )
 
-/*GTStructure Structure to output print */
-type GTStructure struct {
-	Name  string
-	Items []*GTStructure
+type (
+	tree struct {
+		text  string
+		items []Tree
+	}
+
+	Tree interface {
+		Add(text string) Tree
+		AddTree(tree Tree)
+		Items() []Tree
+		Text() string
+		Print() string
+	}
+
+	printer struct {
+	}
+
+	Printer interface {
+		Print(Tree) string
+	}
+)
+
+func New(text string) Tree {
+	return &tree{
+		text:  text,
+		items: []Tree{},
+	}
 }
 
-func StringTree(object *GTStructure) (result string) {
-	result += object.Name + "\n"
-	var spaces []bool
-	result += stringObjItems(object.Items, spaces)
-	return
+func (t *tree) Add(text string) Tree {
+	n := New(text)
+	t.items = append(t.items, n)
+	return n
 }
 
-func stringLine(name string, spaces []bool, last bool) (result string) {
+func (t *tree) AddTree(tree Tree) {
+	t.items = append(t.items, tree)
+}
+
+func (t *tree) Text() string {
+	return t.text
+}
+
+func (t *tree) Items() []Tree {
+	return t.items
+}
+
+func (t *tree) Print() string {
+	return newPrinter().Print(t)
+}
+
+func newPrinter() Printer {
+	return &printer{}
+}
+
+func (p *printer) Print(t Tree) string {
+	return t.Text() + newLine + p.printItems(t.Items(), []bool{})
+}
+
+func (p *printer) printText(text string, spaces []bool) string {
+	var result string
+	last := true
 	for _, space := range spaces {
 		if space {
-			result += "    "
+			result += emptySpace
 		} else {
-			result += "│   "
+			result += continueItem
 		}
+		last = space
 	}
 
-	indicator := "├── "
+	indicator := middleItem
 	if last {
-		indicator = "└── "
+		indicator = lastItem
 	}
 
-	result += indicator + name + "\n"
-	return
+	return result + indicator + text + newLine
 }
 
-func stringObjItems(items []*GTStructure, spaces []bool) (result string) {
-	for i, f := range items {
-		last := (i >= len(items)-1)
-		result += stringLine(f.Name, spaces, last)
-		if len(f.Items) > 0 {
+func (p *printer) printItems(t []Tree, spaces []bool) string {
+	var result string
+	for i, f := range t {
+		last := i == len(t)-1
+		result += p.printText(f.Text(), spaces)
+		if len(f.Items()) > 0 {
 			spacesChild := append(spaces, last)
-			result += stringObjItems(f.Items, spacesChild)
+			result += p.printItems(f.Items(), spacesChild)
 		}
 	}
-	return
-}
-
-/*PrintTree - Print the tree in console */
-func PrintTree(object *GTStructure) {
-	fmt.Println(StringTree(object))
-}
-
-/*ReadFolder - Read a folder and return the generated object */
-func ReadFolder(directory string) *GTStructure {
-	parent := &GTStructure{}
-
-	parent.Name = directory
-	parent.Items = createGTReadFolder(directory)
-
-	return parent
-}
-
-func createGTReadFolder(directory string) []*GTStructure {
-	var items []*GTStructure
-	files, _ := ioutil.ReadDir(directory)
-
-	for _, f := range files {
-		child := &GTStructure{}
-		child.Name = f.Name()
-
-		if f.IsDir() {
-			newDirectory := filepath.Join(directory, f.Name())
-			child.Items = createGTReadFolder(newDirectory)
-		}
-
-		items = append(items, child)
-	}
-	return items
+	return result
 }
