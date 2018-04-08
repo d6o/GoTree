@@ -37,37 +37,22 @@ $ go get github.com/disiqueira/gotree
 ![](http://image.prntscr.com/image/dd2fe3737e6543f7b21941a6953598c2.png)
 
 ```golang
-import "github.com/disiqueira/gotree"
+package main
 
-var artist gotree.GTStructure
-artist.Name = "Pantera"
+import (
+    "fmt"
 
-var album gotree.GTStructure
-album.Name = "Far Beyond Driven"
+    "github.com/disiqueira/gotree"
+)
 
-var music gotree.GTStructure
-music.Name = "5 Minutes Alone"
+func main() {
+	artist := New("Pantera")
+	album := artist.Add("Far Beyond Driven")
+	album.Add("5 minutes Alone")
 
-//Add Music to the Album
-album.Items = append(album.Items, &music)
-
-//Add Album to the Artist
-artist.Items = append(artist.Items, &album)
-
-gotree.PrintTree(&artist)
+	fmt.Println(artist.Print())
+}
 ```
-
-### Read folder and print tree
-
-![](http://image.prntscr.com/image/087fa74560b04a1e8a653c6c630d1e45.png)
-
-```golang
-import "github.com/disiqueira/gotree"
-
-obj := gotree.ReadFolder("/Users/disiqueira/Documents/placa_display_led")
-gotree.PrintTree(obj)
-```
-
 
 ## Contributing
 
@@ -80,7 +65,6 @@ Please use the [issue tracker](https://github.com/DiSiqueira/GoTree/issues) to r
 PRs are welcome. To begin developing, do this:
 
 ```bash
-$ go get gopkg.in/ini.v1
 $ git clone --recursive git@github.com:DiSiqueira/GoTree.git
 $ cd GoTree/
 ```
@@ -99,7 +83,7 @@ $ cd GoTree/
 
 The MIT License (MIT)
 
-Copyright (c) 2013-2017 Diego Siqueira
+Copyright (c) 2013-2018 Diego Siqueira
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
