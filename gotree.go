@@ -1,4 +1,4 @@
-package main
+package gotree 
 
 const (
 	newLine      = "\n"
