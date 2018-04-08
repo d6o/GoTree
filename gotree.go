@@ -1,16 +1,16 @@
 package main
 
 const (
-	newLine = "\n"
-	emptySpace = "    "
-	middleItem = "├── "
+	newLine      = "\n"
+	emptySpace   = "    "
+	middleItem   = "├── "
 	continueItem = "│   "
-	lastItem = "└── "
+	lastItem     = "└── "
 )
 
 type (
 	tree struct {
-		text string
+		text  string
 		items []Tree
 	}
 
@@ -23,7 +23,6 @@ type (
 	}
 
 	printer struct {
-
 	}
 
 	Printer interface {
@@ -33,7 +32,7 @@ type (
 
 func New(text string) Tree {
 	return &tree{
-		text:text,
+		text:  text,
 		items: []Tree{},
 	}
 }
@@ -65,11 +64,7 @@ func newPrinter() Printer {
 }
 
 func (p *printer) Print(t Tree) string {
-	return p.print(t)
-}
-
-func (p *printer) print(t Tree) string {
-	return t.Text() + newLine + p.printItems(t.Items(),[]bool{})
+	return t.Text() + newLine + p.printItems(t.Items(), []bool{})
 }
 
 func (p *printer) printText(text string, spaces []bool) string {
@@ -95,7 +90,7 @@ func (p *printer) printText(text string, spaces []bool) string {
 func (p *printer) printItems(t []Tree, spaces []bool) string {
 	var result string
 	for i, f := range t {
-		last := i == len(t) -1
+		last := i == len(t)-1
 		result += p.printText(f.Text(), spaces)
 		if len(f.Items()) > 0 {
 			spacesChild := append(spaces, last)
