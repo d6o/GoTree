@@ -67,16 +67,14 @@ func (p *printer) Print(t Tree) string {
 	return t.Text() + newLine + p.printItems(t.Items(), []bool{})
 }
 
-func (p *printer) printText(text string, spaces []bool) string {
+func (p *printer) printText(text string, spaces []bool, last bool) string {
 	var result string
-	last := true
 	for _, space := range spaces {
 		if space {
 			result += emptySpace
 		} else {
 			result += continueItem
 		}
-		last = space
 	}
 
 	indicator := middleItem
@@ -91,7 +89,7 @@ func (p *printer) printItems(t []Tree, spaces []bool) string {
 	var result string
 	for i, f := range t {
 		last := i == len(t)-1
-		result += p.printText(f.Text(), spaces)
+		result += p.printText(f.Text(), spaces, last)
 		if len(f.Items()) > 0 {
 			spacesChild := append(spaces, last)
 			result += p.printItems(f.Items(), spacesChild)
