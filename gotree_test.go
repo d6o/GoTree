@@ -1,26 +1,21 @@
 package gotree_test
 
 import (
-	"testing"
+	"fmt"
 
 	gotree "github.com/DiSiqueira/GoTree"
 )
 
-func TestLast(t *testing.T) {
-	want := `Pantera
-├── Far Beyond Driven
-│   └── 5 minutes Alone
-└── Power Metal
-`
-
+func ExampleTree() {
 	artist := gotree.New("Pantera")
 	album := artist.Add("Far Beyond Driven")
 	album.Add("5 minutes Alone")
 	artist.Add("Power Metal")
+	fmt.Println(artist.Print())
 
-	got := artist.Print()
-	if got != want {
-		t.Errorf("Expected: \n%s\n", want)
-		t.Errorf("Got: \n%s\n", got)
-	}
+	// Output:
+	// Pantera
+	// ├── Far Beyond Driven
+	// │   └── 5 minutes Alone
+	// └── Power Metal
 }
