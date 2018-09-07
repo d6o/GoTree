@@ -1,4 +1,5 @@
-package gotree 
+// Package gotree create and print tree.
+package gotree
 
 const (
 	newLine      = "\n"
@@ -14,6 +15,7 @@ type (
 		items []Tree
 	}
 
+	// Tree is tree inteface
 	Tree interface {
 		Add(text string) Tree
 		AddTree(tree Tree)
@@ -25,11 +27,13 @@ type (
 	printer struct {
 	}
 
+	// Printer is printer interface
 	Printer interface {
 		Print(Tree) string
 	}
 )
 
+// New returns a new GoTree.Tree
 func New(text string) Tree {
 	return &tree{
 		text:  text,
@@ -37,24 +41,29 @@ func New(text string) Tree {
 	}
 }
 
+// Add node in tree
 func (t *tree) Add(text string) Tree {
 	n := New(text)
 	t.items = append(t.items, n)
 	return n
 }
 
+// AddTree is add tree in present tree
 func (t *tree) AddTree(tree Tree) {
 	t.items = append(t.items, tree)
 }
 
+// Text return text of root name
 func (t *tree) Text() string {
 	return t.text
 }
 
+// Items return slice of tree nodes
 func (t *tree) Items() []Tree {
 	return t.items
 }
 
+// Print return string of tree
 func (t *tree) Print() string {
 	return newPrinter().Print(t)
 }
