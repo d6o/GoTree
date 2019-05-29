@@ -1,6 +1,10 @@
 // Package gotree create and print tree.
 package gotree
 
+import (
+	"strings"
+)
+
 const (
 	newLine      = "\n"
 	emptySpace   = "    "
@@ -91,7 +95,23 @@ func (p *printer) printText(text string, spaces []bool, last bool) string {
 		indicator = lastItem
 	}
 
-	return result + indicator + text + newLine
+	var out string
+	lines := strings.Split(text, "\n")
+	for i := range lines {
+		text := lines[i]
+		if i == 0 {
+			out += result + indicator + text + newLine
+			continue
+		}
+		if last {
+			indicator = emptySpace
+		} else {
+			indicator = continueItem
+		}
+		out += result + indicator + text + newLine
+	}
+
+	return out
 }
 
 func (p *printer) printItems(t []Tree, spaces []bool) string {
