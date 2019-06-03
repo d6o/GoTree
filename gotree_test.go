@@ -16,7 +16,7 @@ func ExampleTree() {
 
 	artist.Add("Power Metal\n(1988)")
 	artist.Add("Cowboys from Hell\n(1990)")
-	fmt.Println(artist.Print())
+	fmt.Println(gotree.Print(artist))
 
 	// Output:
 	// Pantera

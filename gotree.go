@@ -25,7 +25,6 @@ type (
 		AddTree(tree Tree)
 		Items() []Tree
 		Text() string
-		Print() string
 	}
 
 	// Printer is printer interface
