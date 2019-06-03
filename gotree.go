@@ -14,57 +14,55 @@ const (
 )
 
 type (
-	tree struct {
+	Tree struct {
 		text  string
-		items []Tree
+		items []Node
 	}
 
-	// Tree is tree inteface
-	Tree interface {
-		Add(text string) Tree
-		AddTree(tree Tree)
-		Items() []Tree
+	// Node is tree inteface
+	Node interface {
+		Items() []Node
 		Text() string
 	}
 )
 
 // New returns a new GoTree.Tree
-func New(text string) Tree {
-	return &tree{
+func New(text string) *Tree {
+	return &Tree{
 		text:  text,
-		items: []Tree{},
+		items: []Node{},
 	}
 }
 
 // Add node in tree
-func (t *tree) Add(text string) Tree {
+func (t *Tree) Add(text string) *Tree {
 	n := New(text)
 	t.items = append(t.items, n)
 	return n
 }
 
-// AddTree is add tree in present tree
-func (t *tree) AddTree(tree Tree) {
-	t.items = append(t.items, tree)
+// AddNode is add tree in present tree
+func (t *Tree) AddNode(n Node) {
+	t.items = append(t.items, n)
 }
 
 // Text return text of root name
-func (t *tree) Text() string {
+func (t *Tree) Text() string {
 	return t.text
 }
 
 // Items return slice of tree nodes
-func (t *tree) Items() []Tree {
+func (t *Tree) Items() []Node {
 	return t.items
 }
 
 // Print return string of tree
-func (t *tree) Print() string {
+func (t *Tree) Print() string {
 	return Print(t)
 }
 
-func Print(t Tree) string {
-	return t.Text() + newLine + printItems(t.Items(), []bool{})
+func Print(n Node) string {
+	return n.Text() + newLine + printItems(n.Items(), []bool{})
 }
 
 func printText(text string, spaces []bool, last bool) string {
@@ -101,7 +99,7 @@ func printText(text string, spaces []bool, last bool) string {
 	return out
 }
 
-func printItems(t []Tree, spaces []bool) string {
+func printItems(t []Node, spaces []bool) string {
 	var result string
 	for i, f := range t {
 		last := i == len(t)-1
