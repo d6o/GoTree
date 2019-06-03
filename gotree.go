@@ -62,16 +62,24 @@ func (t *Tree) Print() string {
 }
 
 func Print(n Node) string {
-	return n.Text() + newLine + printItems(n.Items(), []bool{})
+	var out strings.Builder
+	printNode(&out, n)
+	return out.String()
 }
 
-func printText(text string, spaces []bool, last bool) string {
-	var result string
+func printNode(out *strings.Builder, n Node) {
+	out.WriteString(n.Text())
+	out.WriteString(newLine)
+	printItems(out, n.Items(), []bool{})
+}
+
+func printText(out *strings.Builder, text string, spaces []bool, last bool) {
+	var prefix string
 	for _, space := range spaces {
 		if space {
-			result += emptySpace
+			prefix += emptySpace
 		} else {
-			result += continueItem
+			prefix += continueItem
 		}
 	}
 
@@ -80,12 +88,11 @@ func printText(text string, spaces []bool, last bool) string {
 		indicator = lastItem
 	}
 
-	var out string
 	lines := strings.Split(text, "\n")
 	for i := range lines {
 		text := lines[i]
 		if i == 0 {
-			out += result + indicator + text + newLine
+			out.WriteString(prefix + indicator + text + newLine)
 			continue
 		}
 		if last {
@@ -93,20 +100,18 @@ func printText(text string, spaces []bool, last bool) string {
 		} else {
 			indicator = continueItem
 		}
-		out += result + indicator + text + newLine
+		out.WriteString(prefix + indicator + text + newLine)
 	}
-
-	return out
 }
 
-func printItems(t []Node, spaces []bool) string {
+func printItems(out *strings.Builder, t []Node, spaces []bool) string {
 	var result string
 	for i, f := range t {
 		last := i == len(t)-1
-		result += printText(f.Text(), spaces, last)
-		if len(f.Items()) > 0 {
+		printText(out, f.Text(), spaces, last)
+		if items := f.Items(); len(items) > 0 {
 			spacesChild := append(spaces, last)
-			result += printItems(f.Items(), spacesChild)
+			printItems(out, f.Items(), spacesChild)
 		}
 	}
 	return result
