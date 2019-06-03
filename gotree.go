@@ -28,9 +28,6 @@ type (
 		Print() string
 	}
 
-	printer struct {
-	}
-
 	// Printer is printer interface
 	Printer interface {
 		Print(Tree) string
@@ -69,18 +66,14 @@ func (t *tree) Items() []Tree {
 
 // Print return string of tree
 func (t *tree) Print() string {
-	return newPrinter().Print(t)
+	return Print(t)
 }
 
-func newPrinter() Printer {
-	return &printer{}
+func Print(t Tree) string {
+	return t.Text() + newLine + printItems(t.Items(), []bool{})
 }
 
-func (p *printer) Print(t Tree) string {
-	return t.Text() + newLine + p.printItems(t.Items(), []bool{})
-}
-
-func (p *printer) printText(text string, spaces []bool, last bool) string {
+func printText(text string, spaces []bool, last bool) string {
 	var result string
 	for _, space := range spaces {
 		if space {
@@ -114,14 +107,14 @@ func (p *printer) printText(text string, spaces []bool, last bool) string {
 	return out
 }
 
-func (p *printer) printItems(t []Tree, spaces []bool) string {
+func printItems(t []Tree, spaces []bool) string {
 	var result string
 	for i, f := range t {
 		last := i == len(t)-1
-		result += p.printText(f.Text(), spaces, last)
+		result += printText(f.Text(), spaces, last)
 		if len(f.Items()) > 0 {
 			spacesChild := append(spaces, last)
-			result += p.printItems(f.Items(), spacesChild)
+			result += printItems(f.Items(), spacesChild)
 		}
 	}
 	return result
