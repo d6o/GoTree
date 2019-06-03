@@ -26,11 +26,6 @@ type (
 		Items() []Tree
 		Text() string
 	}
-
-	// Printer is printer interface
-	Printer interface {
-		Print(Tree) string
-	}
 )
 
 // New returns a new GoTree.Tree
