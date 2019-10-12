@@ -19,7 +19,7 @@ type (
 		items []Tree
 	}
 
-	// Tree is tree inteface
+	// Tree is tree interface
 	Tree interface {
 		Add(text string) Tree
 		AddTree(tree Tree)
