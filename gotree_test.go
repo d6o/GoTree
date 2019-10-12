@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"testing"
 )
+
 func ExampleTree() {
 	artist := New("Pantera")
 	album := artist.Add("Far Beyond Driven\nsee https://en.wikipedia.org/wiki/Pantera\n(1994)")
