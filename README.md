@@ -2,7 +2,7 @@
 
 # GoTree ![Language Badge](https://img.shields.io/badge/Language-Go-blue.svg) ![Go Report](https://goreportcard.com/badge/github.com/DiSiqueira/GoTree) ![License Badge](https://img.shields.io/badge/License-MIT-blue.svg) ![Status Badge](https://img.shields.io/badge/Status-Beta-brightgreen.svg) [![GoDoc](https://godoc.org/github.com/DiSiqueira/GoTree?status.svg)](https://godoc.org/github.com/DiSiqueira/GoTree) [![Build Status](https://travis-ci.org/DiSiqueira/GoTree.svg?branch=master)](https://travis-ci.org/DiSiqueira/GoTree)
 
-Simple Go module to print tree structures in terminal. Heavily inpired by [The Tree Command for Linux][treecommand]
+Simple Go module to print tree structures in terminal. Heavily inspired by [The Tree Command for Linux][treecommand]
 
 The GoTree's goal is to be a simple tool providing a stupidly easy-to-use and fast way to print recursive structures.
 
