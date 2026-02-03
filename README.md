@@ -54,6 +54,13 @@ func main() {
 }
 ```
 
+**Output:**
+```
+Pantera
+├── Far Beyond Driven
+    └── 5 minutes Alone
+```
+
 ## Contributing
 
 ### Bug Reports & Feature Requests
