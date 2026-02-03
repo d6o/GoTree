@@ -135,3 +135,7 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Coverage files
+coverage.out
+coverage.html

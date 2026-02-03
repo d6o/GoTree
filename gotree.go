@@ -37,37 +37,45 @@ type (
 	}
 )
 
-//New returns a new GoTree.Tree
+// New returns a new GoTree.Tree.
+// The text parameter accepts any string, including empty strings.
+// Multi-line text is supported using newline characters.
 func New(text string) Tree {
 	return &tree{
 		text:  text,
-		items: []Tree{},
+		items: make([]Tree, 0),
 	}
 }
 
-//Add adds a node to the tree
+// Add adds a node to the tree with the given text.
+// Returns the newly created child node to allow method chaining.
+// Empty strings are valid and will create a node with empty text.
 func (t *tree) Add(text string) Tree {
 	n := New(text)
 	t.items = append(t.items, n)
 	return n
 }
 
-//AddTree adds a tree as an item
+// AddTree adds a tree as an item.
+// If the provided tree is nil, this method does nothing (safe no-op).
 func (t *tree) AddTree(tree Tree) {
+	if tree == nil {
+		return
+	}
 	t.items = append(t.items, tree)
 }
 
-//Text returns the node's value
+// Text returns the node's value
 func (t *tree) Text() string {
 	return t.text
 }
 
-//Items returns all items in the tree
+// Items returns all items in the tree
 func (t *tree) Items() []Tree {
 	return t.items
 }
 
-//Print returns an visual representation of the tree
+// Print returns an visual representation of the tree
 func (t *tree) Print() string {
 	return newPrinter().Print(t)
 }
@@ -76,32 +84,52 @@ func newPrinter() Printer {
 	return &printer{}
 }
 
-//Print prints a tree to a string
+// Print prints a tree to a string
 func (p *printer) Print(t Tree) string {
-	return t.Text() + newLine + p.printItems(t.Items(), []bool{})
+	var builder strings.Builder
+	builder.Grow(len(t.Text()) + 100) // Root text + reasonable default
+
+	builder.WriteString(t.Text())
+	builder.WriteString(newLine)
+	builder.WriteString(p.printItems(t.Items(), []bool{}))
+
+	return builder.String()
 }
 
 func (p *printer) printText(text string, spaces []bool, last bool) string {
-	var result string
+	var builder strings.Builder
+
+	// Pre-allocate capacity for better performance
+	// Estimate: spaces * 4 chars + indicator + text + newline
+	builder.Grow(len(spaces)*4 + 4 + len(text) + 1)
+
+	// Build the prefix from spaces
 	for _, space := range spaces {
 		if space {
-			result += emptySpace
+			builder.WriteString(emptySpace)
 		} else {
-			result += continueItem
+			builder.WriteString(continueItem)
 		}
 	}
+	prefix := builder.String()
 
 	indicator := middleItem
 	if last {
 		indicator = lastItem
 	}
 
-	var out string
+	// Reset builder for output
+	builder.Reset()
+	builder.Grow(len(prefix)*2 + len(text) + 10)
+
 	lines := strings.Split(text, "\n")
 	for i := range lines {
-		text := lines[i]
+		lineText := lines[i] // Fix variable shadowing
 		if i == 0 {
-			out += result + indicator + text + newLine
+			builder.WriteString(prefix)
+			builder.WriteString(indicator)
+			builder.WriteString(lineText)
+			builder.WriteString(newLine)
 			continue
 		}
 		if last {
@@ -109,21 +137,33 @@ func (p *printer) printText(text string, spaces []bool, last bool) string {
 		} else {
 			indicator = continueItem
 		}
-		out += result + indicator + text + newLine
+		builder.WriteString(prefix)
+		builder.WriteString(indicator)
+		builder.WriteString(lineText)
+		builder.WriteString(newLine)
 	}
 
-	return out
+	return builder.String()
 }
 
 func (p *printer) printItems(t []Tree, spaces []bool) string {
-	var result string
+	if len(t) == 0 {
+		return ""
+	}
+
+	var builder strings.Builder
+
+	// Estimate capacity: rough approximation based on tree size
+	// Each item typically needs ~50 chars (conservative estimate)
+	builder.Grow(len(t) * 50)
+
 	for i, f := range t {
 		last := i == len(t)-1
-		result += p.printText(f.Text(), spaces, last)
+		builder.WriteString(p.printText(f.Text(), spaces, last))
 		if len(f.Items()) > 0 {
 			spacesChild := append(spaces, last)
-			result += p.printItems(f.Items(), spacesChild)
+			builder.WriteString(p.printItems(f.Items(), spacesChild))
 		}
 	}
-	return result
+	return builder.String()
 }

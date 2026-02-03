@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+
+      - name: Run tests
+        run: go test -v -race ./...
+
+      - name: Create release
+        uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          release-type: go
+          package-name: gotree
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag major and minor versions
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git tag -d v${{ steps.release.outputs.major }} 2>/dev/null || true
+          git tag -d v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} 2>/dev/null || true
+          git tag -a v${{ steps.release.outputs.major }} -m "Release v${{ steps.release.outputs.major }}"
+          git tag -a v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} -m "Release v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
+          git push origin v${{ steps.release.outputs.major }} --force
+          git push origin v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }} --force

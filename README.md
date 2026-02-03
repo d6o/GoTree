@@ -1,6 +1,6 @@
-# ![GoTree](https://rawgit.com/DiSiqueira/GoTree/master/gotree-logo.png)
+# ![GoTree](https://raw.githubusercontent.com/d6o/GoTree/master/gotree-logo.png)
 
-# GoTree ![Language Badge](https://img.shields.io/badge/Language-Go-blue.svg) ![Go Report](https://goreportcard.com/badge/github.com/DiSiqueira/GoTree) ![License Badge](https://img.shields.io/badge/License-MIT-blue.svg) ![Status Badge](https://img.shields.io/badge/Status-Beta-brightgreen.svg) [![GoDoc](https://godoc.org/github.com/DiSiqueira/GoTree?status.svg)](https://godoc.org/github.com/DiSiqueira/GoTree) [![Build Status](https://travis-ci.org/DiSiqueira/GoTree.svg?branch=master)](https://travis-ci.org/DiSiqueira/GoTree)
+# GoTree ![Language Badge](https://img.shields.io/badge/Language-Go-blue.svg) ![Go Report](https://goreportcard.com/badge/github.com/d6o/GoTree) ![License Badge](https://img.shields.io/badge/License-MIT-blue.svg) ![Status Badge](https://img.shields.io/badge/Status-Beta-brightgreen.svg) [![GoDoc](https://godoc.org/github.com/d6o/GoTree?status.svg)](https://godoc.org/github.com/d6o/GoTree) [![CI](https://github.com/d6o/GoTree/workflows/CI/badge.svg)](https://github.com/d6o/GoTree/actions)
 
 Simple Go module to print tree structures in terminal. Heavily inspired by [The Tree Command for Linux][treecommand]
 
@@ -10,7 +10,7 @@ The GoTree's goal is to be a simple tool providing a stupidly easy-to-use and fa
 
 ## Project Status
 
-GoTree is on beta. Pull Requests [are welcome](https://github.com/DiSiqueira/GoTree#social-coding)
+GoTree is on beta. Pull Requests [are welcome](https://github.com/d6o/GoTree#social-coding)
 
 ![](http://image.prntscr.com/image/2a0dbf0777454446b8083fb6a0dc51fe.png)
 
@@ -20,14 +20,14 @@ GoTree is on beta. Pull Requests [are welcome](https://github.com/DiSiqueira/GoT
 - Intuitive names
 - Easy to extend
 - Uses only native libs
-- STUPIDLY [EASY TO USE](https://github.com/DiSiqueira/GoTree#usage)
+- STUPIDLY [EASY TO USE](https://github.com/d6o/GoTree#usage)
 
 ## Installation
 
 ### Go Get
 
 ```bash
-$ go get github.com/disiqueira/gotree
+$ go get github.com/d6o/gotree
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ package main
 import (
     "fmt"
 
-    "github.com/disiqueira/gotree"
+    "github.com/d6o/gotree"
 )
 
 func main() {
@@ -58,21 +58,21 @@ func main() {
 
 ### Bug Reports & Feature Requests
 
-Please use the [issue tracker](https://github.com/DiSiqueira/GoTree/issues) to report any bugs or file feature requests.
+Please use the [issue tracker](https://github.com/d6o/GoTree/issues) to report any bugs or file feature requests.
 
 ### Developing
 
 PRs are welcome. To begin developing, do this:
 
 ```bash
-$ git clone --recursive git@github.com:DiSiqueira/GoTree.git
+$ git clone --recursive git@github.com:d6o/GoTree.git
 $ cd GoTree/
 ```
 
 ## Social Coding
 
 1. Create an issue to discuss about your idea
-2. [Fork it] (https://github.com/DiSiqueira/GoTree/fork)
+2. [Fork it] (https://github.com/d6o/GoTree/fork)
 3. Create your feature branch (`git checkout -b my-new-feature`)
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
