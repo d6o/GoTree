@@ -1,0 +1,19 @@
+linters:
+  enable:
+    - gofmt
+    - govet
+    - staticcheck
+    - ineffassign
+    - misspell
+    - unconvert
+    - unparam
+    - unused
+    - errcheck
+    - gosimple
+
+linters-settings:
+  govet:
+    check-shadowing: true
+
+issues:
+  exclude-use-default: false

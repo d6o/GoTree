@@ -1,3 +1,7 @@
+# DEPRECATED: This project has migrated to GitHub Actions
+# See .github/workflows/ci.yml for current CI configuration
+# This file is kept for historical reference only
+
 language: go
 go_import_path: github.com/disiqueira/gotree
 git:
